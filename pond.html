@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: rgb(98, 98, 255);
+      
+    }
+
+    #fish {
+      position: absolute;
+      width: 100px;
+      height: 50px;
+      background-color: rgb(255, 62, 62);
+      clip-path: polygon(0% 50%, 50% 0%, 100% 50%, 50% 100%);
+      transform-origin: center;
+      pointer-events: none;
+      transition: transform 0.5s;
+    }
+
+    .eye {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #000;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    #eyeTop {
+      top: 10px;
+      left: 45px;
+    }
+
+    #eyeBottom {
+      top: 30px;
+      left: 45px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="fish">
+  <div id="eyeTop" class="eye"></div>
+  <div id="eyeBottom" class="eye"></div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const fish = document.getElementById('fish');
+    const eyeTop = document.getElementById('eyeTop');
+    const eyeBottom = document.getElementById('eyeBottom');
+
+    document.addEventListener('mousemove', function (event) {
+      const x = event.clientX;
+      const y = event.clientY;
+
+      const fishRect = fish.getBoundingClientRect();
+      const fishX = fishRect.left + fishRect.width / 2;
+      const fishY = fishRect.top + fishRect.height / 2;
+
+      const deltaX = x - fishX;
+      const deltaY = y - fishY;
+      const angle = Math.atan2(deltaY, deltaX);
+
+      fish.style.transition = 'transform 0.5s';
+      fish.style.transform = `translate(${x}px, ${y}px) rotate(${angle}rad)`;
+      eyeTop.style.transform = 'translate(-50%, -50%) rotate(0rad)';
+      eyeBottom.style.transform = 'translate(-50%, -50%) rotate(' + Math.PI + 'rad)';
+    });
+  });
+</script>
+<b>discord username: funniozone</b>
+</body>
+</html>
